@@ -1162,37 +1162,37 @@ extension DropDown {
 
 extension DropDown {
 
-	/**
-	Starts listening to keyboard events.
-	Allows the drop down to display correctly when keyboard is showed.
-	*/
-	@objc public static func startListeningToKeyboard() {
-		KeyboardListener.sharedInstance.startListeningToKeyboard()
-	}
+    /**
+    Starts listening to keyboard events.
+    Allows the drop down to display correctly when keyboard is showed.
+    */
+    @objc public static func startListeningToKeyboard() {
+        KeyboardListener.sharedInstance.startListeningToKeyboard()
+    }
 
-	fileprivate func startListeningToKeyboard() {
-		KeyboardListener.sharedInstance.startListeningToKeyboard()
+    fileprivate func startListeningToKeyboard() {
+        KeyboardListener.sharedInstance.startListeningToKeyboard()
 
-		NotificationCenter.default.addObserver(
-			self,
-			selector: #selector(keyboardUpdate),
-			name: UIResponder.keyboardWillShowNotification,
-			object: nil)
-		NotificationCenter.default.addObserver(
-			self,
-			selector: #selector(keyboardUpdate),
-			name: UIResponder.keyboardWillHideNotification,
-			object: nil)
-	}
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardUpdate),
+            name: UIWindow.keyboardWillShowNotification,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardUpdate),
+            name: UIWindow.keyboardWillHideNotification,
+            object: nil)
+    }
 
-	fileprivate func stopListeningToNotifications() {
-		NotificationCenter.default.removeObserver(self)
-	}
+    fileprivate func stopListeningToNotifications() {
+        NotificationCenter.default.removeObserver(self)
+    }
 
-	@objc
-	fileprivate func keyboardUpdate() {
-		self.setNeedsUpdateConstraints()
-	}
+    @objc
+    fileprivate func keyboardUpdate() {
+        self.setNeedsUpdateConstraints()
+    }
 
 }
 

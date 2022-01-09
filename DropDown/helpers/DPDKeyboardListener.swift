@@ -27,46 +27,46 @@ internal final class KeyboardListener {
 //MARK: - Notifications
 
 extension KeyboardListener {
-	
-	func startListeningToKeyboard() {
-		if isListening {
-			return
-		}
-		
-		isListening = true
-		
-		NotificationCenter.default.addObserver(
-			self,
-			selector: #selector(keyboardWillShow(_:)),
-			name: UIResponder.keyboardWillShowNotification,
-			object: nil)
-		NotificationCenter.default.addObserver(
-			self,
-			selector: #selector(keyboardWillHide(_:)),
-			name: UIResponder.keyboardWillHideNotification,
-			object: nil)
-	}
-	
-	func stopListeningToKeyboard() {
-		NotificationCenter.default.removeObserver(self)
-	}
-	
-	@objc
-	fileprivate func keyboardWillShow(_ notification: Notification) {
-		isVisible = true
-		keyboardFrame = keyboardFrame(fromNotification: notification)
-	}
-	
-	@objc
-	fileprivate func keyboardWillHide(_ notification: Notification) {
-		isVisible = false
-		keyboardFrame = keyboardFrame(fromNotification: notification)
-	}
-	
-	fileprivate func keyboardFrame(fromNotification notification: Notification) -> CGRect {
-		return ((notification as NSNotification).userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue ?? CGRect.zero
-	}
-	
+    
+    func startListeningToKeyboard() {
+        if isListening {
+            return
+        }
+        
+        isListening = true
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow(_:)),
+            name: UIWindow.keyboardWillShowNotification,
+            object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide(_:)),
+            name: UIWindow.keyboardWillHideNotification,
+            object: nil)
+    }
+    
+    func stopListeningToKeyboard() {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc
+    fileprivate func keyboardWillShow(_ notification: Notification) {
+        isVisible = true
+        keyboardFrame = keyboardFrame(fromNotification: notification)
+    }
+    
+    @objc
+    fileprivate func keyboardWillHide(_ notification: Notification) {
+        isVisible = false
+        keyboardFrame = keyboardFrame(fromNotification: notification)
+    }
+    
+    fileprivate func keyboardFrame(fromNotification notification: Notification) -> CGRect {
+        return ((notification as NSNotification).userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue ?? CGRect.zero
+    }
+    
 }
 
 #endif
